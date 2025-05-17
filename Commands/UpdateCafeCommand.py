@@ -18,7 +18,7 @@ def update_cafe(cafe_id: str, update_data: UpdateCafe):
             session.commit()
             session.refresh(cafe)
             return {
-                "message": CAFE_UPDATED.format(cafe.cafeName, cafe.cafeId),
+                "message": CAFE_UPDATED.format(cafe_id = cafe_id),
                 "cafe": cafe
             }
         except Exception as e:

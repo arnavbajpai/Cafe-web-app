@@ -1,6 +1,5 @@
-import os
-
 from sqlmodel import create_engine, SQLModel, Session
+import os
 
 MYSQL_PASSWORD = os.getenv("MYSQL_PASSWORD", "")
 DATABASE_URL = f"mysql+pymysql://root:{MYSQL_PASSWORD}@localhost:3306/cafe_hub"

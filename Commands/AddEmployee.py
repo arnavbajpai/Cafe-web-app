@@ -8,16 +8,18 @@ from Models.DatabaseModels import EmployeeDB
 from Utils.Messages import EMPLOYEE_ADDED, EMPLOYEE_EXISTS
 from Utils.Exceptions import server_error_exception
 
-
 def add_employee(employee: Employee):
     employee_db = EmployeeDB(**employee.dict())
+    name = employee.empName
+    id = employee.empId
     with get_session() as session:
         try:
             session.add(employee_db)
             session.commit()
             session.refresh(employee_db)
             return {
-                "message": EMPLOYEE_ADDED.format(employee.employeeName, employee.employeeId)
+                "message": EMPLOYEE_ADDED.format(emp_name = name, emp_id = id), 
+                "employee": employee
             }
         except IntegrityError as e:
             session.rollback()

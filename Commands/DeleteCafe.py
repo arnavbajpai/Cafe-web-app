@@ -13,7 +13,7 @@ def delete_cafe(cafe_id: str):
         try:
             session.delete(cafe)
             session.commit()
-            return {"message": CAFE_DELETED.format(name, cafe_id)}
+            return {"message": CAFE_DELETED.format(cafe_name = name, cafe_id = cafe_id)}
         except Exception as e:
             session.rollback()
             server_error_exception(e)

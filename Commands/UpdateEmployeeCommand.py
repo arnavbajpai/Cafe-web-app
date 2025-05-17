@@ -28,7 +28,7 @@ def update_employee(employee_id: str, update_data: UpdateEmployee):
             session.commit()
             session.refresh(employee)
             return {
-                "message": EMPLOYEE_UPDATED.format(employee_id),
+                "message": EMPLOYEE_UPDATED.format(emp_id = employee_id),
                 "employee": employee
             }
         except Exception as e:
@@ -41,6 +41,7 @@ def get_cafe_by_name(session, cafe_name: str):
         CafeDB.cafeName == cafe_name)).first()
     if not cafe:
         cafe_not_found_exception(cafe_name)
+    return cafe
 
 
 def get_employee_cafe_record(session, emp_id: str):

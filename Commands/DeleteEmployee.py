@@ -14,7 +14,7 @@ def delete_employee(employee_id: str):
         try:
             session.delete(employee)
             session.commit()
-            return {"message": EMPLOYEE_DELETED.format(name, employee_id)}
+            return {"message": EMPLOYEE_DELETED.format(emp_name = name, emp_id = employee_id)}
         except Exception as e:
             session.rollback()
             server_error_exception(e)
