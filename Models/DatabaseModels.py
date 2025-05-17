@@ -1,8 +1,8 @@
 from sqlmodel import SQLModel, Field
 from uuid import UUID, uuid4
-from typing import Optional, Literal
+from typing import Optional
 from datetime import date
-
+from Models.Schemas import Gender
 class CafeDB(SQLModel, table=True):
     __tablename__ = "cafe"
     cafeId: UUID = Field(default_factory=uuid4, primary_key=True)
@@ -17,7 +17,7 @@ class EmployeeDB(SQLModel, table=True):
     empName: str
     email: str
     phoneNumber: str
-    gender: Literal["Male", "Female"]
+    gender: Gender
 
 class EmployeeCafeDB(SQLModel, table=True):
     __tablename__ = "employee_cafe"

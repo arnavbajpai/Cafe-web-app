@@ -1,6 +1,7 @@
 from fastapi import HTTPException
-from Database import get_session
-from Models import EmployeeDB, UpdateEmployee
+from Database.Database import get_session
+from Models.DatabaseModels import EmployeeDB
+from Models.Schemas import UpdateEmployee
 
 def update_employee(employee_id: str, update_data: UpdateEmployee):
     with get_session() as session:

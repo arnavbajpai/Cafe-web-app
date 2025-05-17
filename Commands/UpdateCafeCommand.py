@@ -1,6 +1,7 @@
 from fastapi import HTTPException
-from Database import get_session
-from Models import CafeDB, UpdateCafe
+from Database.Database import get_session
+from Models.DatabaseModels import CafeDB
+from Models.Schemas import UpdateCafe
 
 def update_cafe(cafe_id: str, update_data: UpdateCafe):
     with get_session() as session:

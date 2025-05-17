@@ -12,6 +12,7 @@ class Employee(BaseModel):
     phone: str = Field(pattern=r'^[89]\d{7}$')
     gender: Gender
     cafe: str | None
+    days: int | None
 
 class Cafe(BaseModel):
     cafeId: UUID

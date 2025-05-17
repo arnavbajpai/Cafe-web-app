@@ -1,7 +1,8 @@
 from fastapi import HTTPException
 from sqlalchemy.exc import IntegrityError
-from Database import get_session
-from Models import Employee, EmployeeDB
+from Database.Database import get_session
+from Models.Schemas import Employee
+from Models.DatabaseModels import EmployeeDB
 
 def add_employee(employee: Employee):
     employee_db = EmployeeDB(**employee.dict())
@@ -10,7 +11,10 @@ def add_employee(employee: Employee):
             session.add(employee_db)
             session.commit()
             session.refresh(employee_db)
-            return employee_db
+            return {
+                "message": f"Employee {employee_db.name} with UUID {employee_db.id} added successfully.",
+                "employee": employee
+            }
         except IntegrityError as e:
             session.rollback()
             raise HTTPException(

@@ -1,7 +1,8 @@
 from fastapi import HTTPException
 from sqlalchemy.exc import IntegrityError
-from Database import get_session
-from Models import Cafe, CafeDB
+from Database.Database import get_session
+from Models.Schemas import Cafe
+from Models.DatabaseModels import CafeDB
 
 def add_cafe(cafe: Cafe):
     cafe_db = CafeDB(**cafe.dict())
@@ -10,7 +11,7 @@ def add_cafe(cafe: Cafe):
             session.add(cafe_db)
             session.commit()
             session.refresh(cafe_db)
-            return cafe_db
+            return {"message": f"Cafe {cafe_db.name} with UUID {cafe_db.id} added successfully.", "cafe": cafe_db}
         except IntegrityError as e:
             session.rollback()
             raise HTTPException(

@@ -1,6 +1,6 @@
 from fastapi import HTTPException
-from Database import get_session
-from Models import EmployeeDB
+from Database.Database import get_session
+from Models.DatabaseModels import EmployeeDB
 
 def delete_employee(employee_id: str):
     with get_session() as session:

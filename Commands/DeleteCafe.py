@@ -1,6 +1,6 @@
 from fastapi import HTTPException
-from Database import get_session
-from Models import CafeDB
+from Database.Database import get_session
+from Models.DatabaseModels import CafeDB
 
 def delete_cafe(cafe_id: str):
     with get_session() as session:
