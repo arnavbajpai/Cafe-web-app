@@ -7,7 +7,7 @@ def delete_cafe(cafe_id: str):
         cafe = session.get(CafeDB, cafe_id)
         if not cafe:
             raise HTTPException(status_code=404, detail=f"Cafe {cafe_id} not found.")
-        name = cafe.name
+        name = cafe.cafeName
         try:
             session.delete(cafe)
             session.commit()

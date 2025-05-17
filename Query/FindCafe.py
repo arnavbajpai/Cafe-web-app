@@ -4,10 +4,11 @@ from Models.Schemas import Cafe
 from sqlmodel import select
 
 def get_employee_count(session, cafe_id):
-    return session.exec(
-        select(EmployeeCafeDB).where(EmployeeCafeDB.cafeId == cafe_id)
-    ).count()
-
+    return len(
+        session.exec(
+            select(EmployeeCafeDB).where(EmployeeCafeDB.cafeId == cafe_id)
+        ).all()
+    )   
 def build_cafe_data(cafe, employee_count):
     return Cafe(**cafe.dict(), employees=employee_count)
 

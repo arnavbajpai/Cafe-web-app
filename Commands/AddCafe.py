@@ -11,7 +11,7 @@ def add_cafe(cafe: Cafe):
             session.add(cafe_db)
             session.commit()
             session.refresh(cafe_db)
-            return {"message": f"Cafe {cafe_db.name} with UUID {cafe_db.id} added successfully.", "cafe": cafe_db}
+            return {"message": f"Cafe {cafe_db.cafeName} with UUID {cafe_db.cafeId} added successfully.", "cafe": cafe_db}
         except IntegrityError as e:
             session.rollback()
             raise HTTPException(

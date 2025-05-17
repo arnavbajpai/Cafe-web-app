@@ -12,14 +12,14 @@ def add_employee(employee: Employee):
             session.commit()
             session.refresh(employee_db)
             return {
-                "message": f"Employee {employee_db.name} with UUID {employee_db.id} added successfully.",
+                "message": f"Employee {employee_db.empName} with UUID {employee_db.empId} added successfully.",
                 "employee": employee
             }
         except IntegrityError as e:
             session.rollback()
             raise HTTPException(
                 status_code=409,
-                detail="Employee with the same id or email already exists.")
+                detail=f"Employee with the same id or email already exists." + str(e))
         except Exception as e:
             session.rollback()
             raise HTTPException(
