@@ -1,10 +1,12 @@
+from datetime import date as dt_date
+
+from sqlmodel import select
+
 from Database.Database import get_session
 from Models.DatabaseModels import EmployeeDB, EmployeeCafeDB, CafeDB
 from Models.Schemas import Employee
-from sqlmodel import select
-from datetime import date as dt_date
 
-def get_employee_cafe(session, emp_id)-> str | None:
+def get_employee_cafe(session, emp_id) -> str | None:
     cafe = session.exec(
         select(CafeDB)
         .join(EmployeeCafeDB, EmployeeCafeDB.cafeId == CafeDB.cafeId)
@@ -12,21 +14,23 @@ def get_employee_cafe(session, emp_id)-> str | None:
     ).first()
     return cafe.cafeName if cafe else None
 
-def get_employee_cafe_start_date(session, emp_id)-> dt_date | None:
+
+def get_employee_cafe_start_date(session, emp_id) -> dt_date | None:
 
     emp_cafe = session.exec(
         select(EmployeeCafeDB).where(EmployeeCafeDB.empId == emp_id)
     ).first()
     return emp_cafe.startDate if emp_cafe else None
 
-def get_days_passed(start_date)-> int | None:
 
+def get_days_passed(start_date) -> int | None:
     if not start_date:
         return None
     currentdate = dt_date.today()
     return (currentdate - start_date).days
 
-def find_employee_by_cafe(cafe_name: str | None)-> list[EmployeeDB]:
+
+def find_employee_by_cafe(cafe_name: str | None) -> list[EmployeeDB]:
     with get_session() as session:
         if cafe_name:
             stmt = (
@@ -46,5 +50,6 @@ def find_employee_by_cafe(cafe_name: str | None)-> list[EmployeeDB]:
             days_passed = get_days_passed(date)
             emp_data = Employee(**emp.dict(), cafe=name, days=days_passed)
             employees.append(emp_data)
-        employees.sort(key=lambda x: x.days if x.days is not None else -1, reverse=True)
+        employees.sort(
+            key=lambda x: x.days if x.days is not None else -1, reverse=True)
         return employees

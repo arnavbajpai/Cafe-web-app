@@ -1,8 +1,12 @@
-from sqlmodel import SQLModel, Field
-from uuid import UUID, uuid4
-from typing import Optional
 from datetime import date
+from typing import Optional
+from uuid import UUID, uuid4
+
+from sqlmodel import SQLModel, Field
+
 from Models.Schemas import Gender
+
+
 class CafeDB(SQLModel, table=True):
     __tablename__ = "cafe"
     cafeId: UUID = Field(default_factory=uuid4, primary_key=True)
@@ -11,6 +15,7 @@ class CafeDB(SQLModel, table=True):
     logo: Optional[str] = None
     location: str
 
+
 class EmployeeDB(SQLModel, table=True):
     __tablename__ = "employee"
     empId: str = Field(primary_key=True)
@@ -18,6 +23,7 @@ class EmployeeDB(SQLModel, table=True):
     email: str
     phoneNumber: str
     gender: Gender
+
 
 class EmployeeCafeDB(SQLModel, table=True):
     __tablename__ = "employee_cafe"

@@ -1,7 +1,9 @@
 from typing import Annotated
 from uuid import UUID
-from Models.Schemas import Cafe, Employee, UpdateCafe, UpdateEmployee
+
 from fastapi import FastAPI, Body, Path
+
+from Models.Schemas import Cafe, Employee, UpdateCafe, UpdateEmployee
 from Database.Database import init_db
 from Query.FindCafe import find_cafe_by_location
 from Query.FindEmployee import find_employee_by_cafe
@@ -11,19 +13,22 @@ from Commands.UpdateCafeCommand import update_cafe
 from Commands.UpdateEmployeeCommand import update_employee
 from Commands.DeleteCafe import delete_cafe
 from Commands.DeleteEmployee import delete_employee
+
 app = FastAPI()
+
 
 @app.on_event("startup")
 def on_startup():
     init_db()
 
+
 @app.get("/cafes/", status_code=200)
-async def get_cafes(location: str | None = None)-> list[Cafe]:
+async def get_cafes(location: str | None = None) -> list[Cafe]:
     return find_cafe_by_location(location)
 
 
 @app.get("/employees/", status_code=200)
-async def get_employees(cafe: str | None = None)-> list[Employee]:
+async def get_employees(cafe: str | None = None) -> list[Employee]:
     return find_employee_by_cafe(cafe)
 
 
@@ -43,8 +48,8 @@ async def modify_cafe(cafe_id: UUID, cafe: Annotated[UpdateCafe, Body()]):
 
 
 @app.put("/employees/{employee_id}", status_code=200)
-async def modify_employee(employee_id: Annotated[str, Path(pattern=r'^UI\d{7}$')], 
-    employee: Annotated[UpdateEmployee, Body()]):
+async def modify_employee(employee_id: Annotated[str, Path(pattern=r'^UI\d{7}$')],
+                          employee: Annotated[UpdateEmployee, Body()]):
     return update_employee(employee_id, employee)
 
 

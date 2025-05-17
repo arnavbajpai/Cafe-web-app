@@ -1,8 +1,13 @@
 from fastapi import HTTPException
 from sqlalchemy.exc import IntegrityError
+
 from Database.Database import get_session
 from Models.Schemas import Employee
 from Models.DatabaseModels import EmployeeDB
+
+from Utils.Messages import EMPLOYEE_ADDED, EMPLOYEE_EXISTS
+from Utils.Exceptions import server_error_exception
+
 
 def add_employee(employee: Employee):
     employee_db = EmployeeDB(**employee.dict())
@@ -12,17 +17,13 @@ def add_employee(employee: Employee):
             session.commit()
             session.refresh(employee_db)
             return {
-                "message": f"Employee {employee_db.empName} with UUID {employee_db.empId} added successfully.",
-                "employee": employee
+                "message": EMPLOYEE_ADDED.format(employee.employeeName, employee.employeeId)
             }
         except IntegrityError as e:
             session.rollback()
             raise HTTPException(
                 status_code=409,
-                detail=f"Employee with the same id or email already exists." + str(e))
+                detail=EMPLOYEE_EXISTS)
         except Exception as e:
             session.rollback()
-            raise HTTPException(
-                status_code=500, 
-                detail=f"Server error: {str(e)}")
-        
+            server_error_exception(e)

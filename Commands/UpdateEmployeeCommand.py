@@ -1,16 +1,21 @@
-from fastapi import HTTPException
+from datetime import date
+from uuid import UUID
+
+from sqlmodel import select
+
 from Database.Database import get_session
 from Models.DatabaseModels import EmployeeDB, CafeDB, EmployeeCafeDB
 from Models.Schemas import UpdateEmployee
-from sqlmodel import select
-from datetime import date
-from uuid import UUID
+
+from Utils.Messages import EMPLOYEE_UPDATED
+from Utils.Exceptions import server_error_exception, employee_not_found_exception, cafe_not_found_exception
+
 
 def update_employee(employee_id: str, update_data: UpdateEmployee):
     with get_session() as session:
         employee = session.get(EmployeeDB, employee_id)
         if not employee:
-            raise HTTPException(status_code=404, detail=f"Employee {employee_id} not found")
+            employee_not_found_exception(employee_id)
         update_fields = update_data.dict(exclude_unset=True)
         for key, value in update_fields.items():
             if hasattr(employee, key):
@@ -18,19 +23,29 @@ def update_employee(employee_id: str, update_data: UpdateEmployee):
         cafe_name = update_fields.get('cafe')
         if cafe_name:
             update_relationship(session, cafe_name, employee_id)
-        session.add(employee)
-        session.commit()
-        session.refresh(employee)
-        return {"message": f"Employee {employee_id} updated successfully", "employee": employee}
+        try:
+            session.add(employee)
+            session.commit()
+            session.refresh(employee)
+            return {
+                "message": EMPLOYEE_UPDATED.format(employee_id),
+                "employee": employee
+            }
+        except Exception as e:
+            session.rollback()
+            server_error_exception(e)
+
 
 def get_cafe_by_name(session, cafe_name: str):
-    cafe = session.exec(select(CafeDB).where(CafeDB.cafeName == cafe_name)).first()
+    cafe = session.exec(select(CafeDB).where(
+        CafeDB.cafeName == cafe_name)).first()
     if not cafe:
-        raise HTTPException(status_code=404, detail=f"Cafe '{cafe_name}' not found")
-    return cafe
+        cafe_not_found_exception(cafe_name)
+
 
 def get_employee_cafe_record(session, emp_id: str):
     return session.exec(select(EmployeeCafeDB).where(EmployeeCafeDB.empId == emp_id)).first()
+
 
 def update_employee_cafe(session, emp_id: str, cafe_id: UUID):
     emp_cafe = get_employee_cafe_record(session, emp_id)
@@ -42,6 +57,7 @@ def update_employee_cafe(session, emp_id: str, cafe_id: UUID):
         return emp_cafe
     return None
 
+
 def create_employee_cafe(session, emp_id: str, cafe_id: UUID):
     new_emp_cafe = EmployeeCafeDB(
         empId=emp_id,
@@ -52,6 +68,7 @@ def create_employee_cafe(session, emp_id: str, cafe_id: UUID):
     session.commit()
     session.refresh(new_emp_cafe)
     return new_emp_cafe
+
 
 def update_relationship(session, cafe_name: str, emp_id: str):
     cafe = get_cafe_by_name(session, cafe_name)
