@@ -11,12 +11,17 @@ from Utils.Exceptions import server_error_exception
 
 def add_cafe(cafe: Cafe):
     cafe_db = CafeDB(**cafe.dict())
+    name = cafe.cafeName
+    cafe_id = cafe.cafeId
     with get_session() as session:
         try:
             session.add(cafe_db)
             session.commit()
             session.refresh(cafe_db)
-            return {"message": CAFE_ADDED.format(cafe.cafeName, cafe.cafeId), "cafe": cafe}
+            return {
+                "message": CAFE_ADDED.format(cafe_name = cafe.cafeName, cafe_id = cafe.cafeId),
+                "cafe": cafe
+            }
         except IntegrityError as e:
             session.rollback()
             raise HTTPException(
