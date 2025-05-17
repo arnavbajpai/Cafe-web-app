@@ -1,12 +1,19 @@
-from database import get_session
-from models import CafeDB
+from fastapi import HTTPException
+from Database import get_session
+from Models import EmployeeDB
 
-def delete_cafe(cafe_id: str):
+def delete_employee(employee_id: str):
     with get_session() as session:
-        cafe = session.get(CafeDB, cafe_id)
-        if not cafe:
-            return {"error": "Cafe not found"}
-
-        session.delete(cafe)
-        session.commit()
-        return {"message": f"Cafe {cafe_id} deleted successfully"}
+        employee = session.get(EmployeeDB, employee_id)
+        if not employee:
+            raise HTTPException(status_code=404, detail=f"Employee {employee_id} not found")
+        try: 
+            session.delete(employee)
+            session.commit()
+            return {"message": f"Employee {employee_id} deleted successfully"}
+        except Exception as e:  
+            session.rollback()
+            raise HTTPException(
+                status_code=500,
+                detail=f"Server error: {str(e)}"
+            )

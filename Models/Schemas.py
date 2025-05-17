@@ -6,18 +6,20 @@ class Gender(str, Enum):
     female = 'Female'
 
 class Employee(BaseModel):
-    id: str = Field(pattern=r'^UI\d{7}$')
-    name: str
+    empId: str = Field(pattern=r'^UI\d{7}$')
+    empName: str
     email: EmailStr
     phone: str = Field(pattern=r'^[89]\d{7}$')
     gender: Gender
+    cafe: str | None
 
 class Cafe(BaseModel):
-    id: UUID
-    name: str
+    cafeId: UUID
+    cafeName: str
     description: str
     location: str
     logo: str | None
+    employees: int | None
 
 class UpdateCafe(BaseModel):
     name: str | None = Field(min_length=6, max_length=10)
