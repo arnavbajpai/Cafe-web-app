@@ -14,7 +14,7 @@ CREATE TABLE cafe (
     cafeId CHAR(36) PRIMARY KEY,
     cafeName VARCHAR(100) NOT NULL,
     description TEXT NOT NULL,
-    logo VARCHAR(255), 
+    logo BLOB, 
     location VARCHAR(200) NOT NULL
 );
 

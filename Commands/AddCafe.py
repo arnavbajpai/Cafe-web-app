@@ -1,3 +1,4 @@
+
 from fastapi import HTTPException
 from sqlalchemy.exc import IntegrityError
 
@@ -19,7 +20,7 @@ def add_cafe(cafe: Cafe):
             session.commit()
             session.refresh(cafe_db)
             return {
-                "message": CAFE_ADDED.format(cafe_name = cafe.cafeName, cafe_id = cafe.cafeId),
+                "message": CAFE_ADDED.format(cafe_name = name, cafe_id = cafe_id),
                 "cafe": cafe
             }
         except IntegrityError as e:

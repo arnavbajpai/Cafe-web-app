@@ -1,3 +1,4 @@
+
 from sqlmodel import select
 
 from Database.Database import get_session
@@ -13,8 +14,10 @@ def get_employee_count(session, cafe_id):
     )
 
 
-def build_cafe_data(cafe, employee_count):
-    return Cafe(**cafe.dict(), employees=employee_count)
+def build_cafe_data(cafe, employee_count)-> Cafe:
+    cafe = Cafe(**cafe.dict(), employees=employee_count)
+    return cafe
+
 
 
 def find_cafe_by_location(location: str | None) -> list[Cafe]:

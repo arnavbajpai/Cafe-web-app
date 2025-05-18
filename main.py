@@ -2,6 +2,7 @@ from typing import Annotated
 from uuid import UUID
 
 from fastapi import FastAPI, Body, Path
+from fastapi.middleware.cors import CORSMiddleware
 
 from Models.Schemas import Cafe, Employee, UpdateCafe, UpdateEmployee
 from Database.Database import init_db
@@ -14,8 +15,17 @@ from Commands.UpdateEmployeeCommand import update_employee
 from Commands.DeleteCafe import delete_cafe
 from Commands.DeleteEmployee import delete_employee
 
+
+
 app = FastAPI()
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:5173"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 @app.on_event("startup")
 def on_startup():
