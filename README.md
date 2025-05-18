@@ -22,7 +22,7 @@ A full-stack application for managing cafes and their employees, built with Fast
 git clone https://github.com/arnavbajpai/Cafe-web-app.git
 cd Cafe-web-app
 ```
-**Note: Following assumes you have MySQL and python ver 3.9+ currently installed**
+**Note: Following assumes you have MySQL 8.0.* and python 3.9+ currently installed**
 ### 2. Set Up the Database
 
 - Use the provided MySQL schema [here](database/dbConfig.sql) and create a database in MySQL.
