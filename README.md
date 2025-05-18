@@ -6,7 +6,7 @@ A full-stack application for managing cafes and their employees, built with Fast
 ##  Main Features
 
 - **Cafe & Employee Management:** Easily add, edit, and delete cafes and employees.
-- **Advanced Filtering:**  
+- **Search Tool:**  
   - Filter cafes by location.
   - Filter employees by cafe name.  
   *(New in v1.0!)*
@@ -22,10 +22,10 @@ A full-stack application for managing cafes and their employees, built with Fast
 git clone https://github.com/arnavbajpai/Cafe-web-app.git
 cd Cafe-web-app
 ```
-
+**Note: Following assumes you have MySQL and python ver 3.9+ currently installed**
 ### 2. Set Up the Database
 
-- Copy the provided MySQL schema [here](database/dbConfig.sql) and create a database in MySQL.
+- Use the provided MySQL schema [here](database/dbConfig.sql) and create a database in MySQL.
 
 ### 3. Save MySQL Connection Password as Environment Variable
 
@@ -87,21 +87,18 @@ npm install
 npm run dev
 ```
 
+## TBDs
 ---
 
-## 🌐 Deployed App
+1. **Dockerise Backend** 
 
-**Live Link:** (TBD)
 
----
 
-## 📂 Project Structure
+2. **To be deployed on AWS.** 
 
-- `main.py` - FastAPI backend entrypoint
-- `frontend/` - Frontend React/Vue/JS application
-- `database/` - Database Schema and Configuration
 
-- Additional directories/files for configuration and utilities
+
+3. **Add db trigger to auto delete employees when cafe is deleted.** 
 
 ---
 
