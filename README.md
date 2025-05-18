@@ -3,7 +3,7 @@
 
 A full-stack application for managing cafes and their employees, built with FastAPI (backend) and a modern JavaScript frontend.
 
-## 🚀 Main Features
+##  Main Features
 
 - **Cafe & Employee Management:** Easily add, edit, and delete cafes and employees.
 - **Advanced Filtering:**  
@@ -14,7 +14,7 @@ A full-stack application for managing cafes and their employees, built with Fast
 
 ---
 
-## 🛠️ Installation & Local Deployment
+##  Installation & Local Deployment
 
 ### 1. Clone the Repository
 
@@ -25,7 +25,7 @@ cd Cafe-web-app
 
 ### 2. Set Up the Database
 
-- Copy the provided MySQL schema and create a database in MySQL.
+- Copy the provided MySQL schema [here](database/dbConfig.sql) and create a database in MySQL.
 
 ### 3. Save MySQL Connection Password as Environment Variable
 
@@ -33,17 +33,17 @@ Replace `<your_mysql_password>` with your actual MySQL password:
 
 **On Linux/macOS:**
 ```bash
-export MY_SQL_PASSWORD="<your_mysql_password>"
+export MYSQL_PASSWORD="<your_mysql_password>"
 ```
 
 **On Windows (Command Prompt):**
 ```cmd
-set MY_SQL_PASSWORD=<your_mysql_password>
+set MYSQL_PASSWORD=<your_mysql_password>
 ```
 
 **On Windows (PowerShell):**
 ```powershell
-$env:MY_SQL_PASSWORD="<your_mysql_password>"
+$env:MYSQL_PASSWORD="<your_mysql_password>"
 ```
 
 ### 4. Install FastAPI and Dependencies
@@ -110,10 +110,5 @@ Pull requests and feature suggestions are welcome! Please open an issue to discu
 
 ---
 
-## 📄 License
-
-This project is licensed under the MIT License.
-
----
 
 *For any issues or questions, please contact [arnavbajpai](https://github.com/arnavbajpai).*
