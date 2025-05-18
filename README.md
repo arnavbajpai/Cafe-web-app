@@ -99,6 +99,7 @@ npm run dev
 
 - `main.py` - FastAPI backend entrypoint
 - `frontend/` - Frontend React/Vue/JS application
+- `database/` - Database Schema and Configuration
 
 - Additional directories/files for configuration and utilities
 
