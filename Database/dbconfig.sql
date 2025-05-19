@@ -12,7 +12,7 @@ CREATE TABLE employee (
 
 CREATE TABLE cafe (
     cafeId CHAR(36) PRIMARY KEY,
-    cafeName VARCHAR(100) NOT NULL,
+    cafeName VARCHAR(100) NOT NULL UNIQUE,
     description TEXT NOT NULL,
     logo BLOB, 
     location VARCHAR(200) NOT NULL
