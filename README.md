@@ -68,7 +68,7 @@ uvicorn main:app --reload
 
 ### 6. Set Up the Frontend
 
-Please refer to README of [fronted repo](https://github.com/arnavbajpai/Cafe-web-app-frontend/)
+Please refer to README of [frontend repo](https://github.com/arnavbajpai/Cafe-web-app-frontend/)
 
 ## TBDs
 ---
