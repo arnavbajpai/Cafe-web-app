@@ -68,24 +68,7 @@ uvicorn main:app --reload
 
 ### 6. Set Up the Frontend
 
-- Open a new terminal window.
-- Navigate to the frontend directory:
-
-```bash
-cd frontend
-```
-
-- Install dependencies:
-
-```bash
-npm install
-```
-
-### 7. Run the Frontend Server
-
-```bash
-npm run dev
-```
+Please refer to README of [fronted repo](https://github.com/arnavbajpai/Cafe-web-app-frontend/)
 
 ## TBDs
 ---
