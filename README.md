@@ -25,7 +25,7 @@ cd Cafe-web-app
 **Note: Following assumes you have MySQL 8.0.* and python 3.9+ currently installed**
 ### 2. Set Up the Database
 
-- Use the provided MySQL schema [here](database/dbConfig.sql) and create a database in MySQL.
+- Use the provided MySQL schema [here](/database/dbConfig) and create a database in MySQL.
 
 ### 3. Save MySQL Connection Password as Environment Variable
 
