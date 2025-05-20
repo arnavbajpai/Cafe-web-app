@@ -20,7 +20,7 @@ def add_employee(employee: Employee):
             session.add(employee_db)
             session.commit()
             session.refresh(employee_db)
-            update_relationship(session, cafe, id)
+            update_relationship(session, cafe, id) 
             return {
                 "message": EMPLOYEE_ADDED.format(emp_name = name, emp_id = id), 
                 "employee": employee

@@ -1,11 +1,11 @@
 from Database.Database import get_session
 from Models.DatabaseModels import CafeDB
 from Models.Schemas import UpdateCafe
-
+from fastapi import UploadFile
 from Utils.Messages import CAFE_UPDATED
 from Utils.Exceptions import server_error_exception, cafe_not_found_exception
 
-def update_cafe(cafe_id: str, update_data: UpdateCafe):
+def update_cafe(cafe_id: str, update_data: UpdateCafe, logo: bytes = None):
     with get_session() as session:
         cafe = session.get(CafeDB, cafe_id)
         if not cafe:
@@ -13,6 +13,9 @@ def update_cafe(cafe_id: str, update_data: UpdateCafe):
         update_fields = update_data.dict(exclude_unset=True)
         for key, value in update_fields.items():
             setattr(cafe, key, value)
+        if(logo):
+            logo_bytes = logo.file.read() 
+            cafe.logo = logo_bytes  
         try: 
             session.add(cafe)
             session.commit()

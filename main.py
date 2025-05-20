@@ -1,13 +1,14 @@
-from typing import Annotated
+from typing import Annotated, Optional
 from uuid import UUID
 
-from fastapi import FastAPI, Body, Path
+from fastapi import FastAPI, Body, Path, Form, UploadFile, File
 from fastapi.middleware.cors import CORSMiddleware
 
 from Models.Schemas import Cafe, Employee, UpdateCafe, UpdateEmployee
 from Database.Database import init_db
 from Query.FindCafe import find_cafe_by_location
 from Query.FindEmployee import find_employee_by_cafe
+from Query.FetchCafeLogo import fetch_cafe_logo
 from Commands.AddCafe import add_cafe
 from Commands.AddEmployee import add_employee
 from Commands.UpdateCafeCommand import update_cafe
@@ -26,7 +27,7 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
+MAX_SIZE = 1024 * 1024 * 2
 @app.on_event("startup")
 def on_startup():
     init_db()
@@ -43,8 +44,9 @@ async def get_employees(cafe: str | None = None) -> list[Employee]:
 
 
 @app.post("/cafes/", status_code=201)
-async def create_cafe(cafe: Annotated[Cafe, Body()]):
-    return add_cafe(cafe)
+async def create_cafe(cafe: Annotated[Cafe, Body()],
+                      logo: Annotated[UploadFile | None, File()] = None):
+    return add_cafe(cafe, logo)
 
 
 @app.post("/employees/", status_code=201)
@@ -53,8 +55,9 @@ async def create_employee(employee: Annotated[Employee, Body()]):
 
 
 @app.put("/cafes/{cafe_id}", status_code=200)
-async def modify_cafe(cafe_id: UUID, cafe: Annotated[UpdateCafe, Body()]):
-    return update_cafe(cafe_id, cafe)
+async def modify_cafe(cafe_id: UUID,
+                      cafe: Annotated[UpdateCafe, Form()], logo: Optional[UploadFile] = None): #Actually unable to accept form data
+    return update_cafe(cafe_id, cafe, logo)
 
 
 @app.put("/employees/{employee_id}", status_code=200)
@@ -71,3 +74,7 @@ async def remove_cafe(cafe_id: UUID):
 @app.delete("/employees/{employee_id}", status_code=200)
 async def remove_employee(employee_id: Annotated[str, Path(pattern=r'^UI\d{7}$')]):
     delete_employee(employee_id)
+
+@app.get("/cafes/{cafe_id}/logo")
+def get_cafe_logo(cafe_id: UUID):
+    fetch_cafe_logo(cafe_id) 

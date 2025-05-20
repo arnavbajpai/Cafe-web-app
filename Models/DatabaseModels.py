@@ -12,7 +12,7 @@ class CafeDB(SQLModel, table=True):
     cafeId: UUID = Field(default_factory=uuid4, primary_key=True)
     cafeName: str
     description: str
-    logo: Optional[str] = None
+    logo: bytes | None
     location: str
 
 

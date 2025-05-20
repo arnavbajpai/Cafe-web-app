@@ -14,8 +14,9 @@ def get_employee_count(session, cafe_id):
     )
 
 
-def build_cafe_data(cafe, employee_count)-> Cafe:
-    cafe = Cafe(**cafe.dict(), employees=employee_count)
+def build_cafe_data(cafe: CafeDB, employee_count)-> Cafe:
+    logo_url = f"/cafes/{cafe.cafeId}/logo" if cafe.logo else None
+    cafe = Cafe(**cafe.dict(), employees=employee_count, logoUrl=logo_url)
     return cafe
 
 

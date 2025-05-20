@@ -1,6 +1,7 @@
 from enum import Enum
 from uuid import UUID
 from pydantic import BaseModel, Field, EmailStr
+from fastapi import File
 
 
 class Gender(Enum):
@@ -23,15 +24,14 @@ class Cafe(BaseModel):
     cafeName: str
     description: str
     location: str
-    logo: str | None
     employees: int | None
+    logoUrl: str | None = None
 
 
 class UpdateCafe(BaseModel):
     cafeName: str | None = Field(min_length=6, max_length=10)
     description: str | None = Field(max_length=255)
     location: str | None
-    logo: str | None = Field(max_size=2*1024*1024)
 
 
 class UpdateEmployee(BaseModel):
