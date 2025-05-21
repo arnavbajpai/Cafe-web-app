@@ -15,8 +15,6 @@ from Commands.UpdateEmployeeCommand import update_employee
 from Commands.DeleteCafe import delete_cafe
 from Commands.DeleteEmployee import delete_employee
 
-
-
 app = FastAPI()
 
 app.add_middleware(
@@ -32,22 +30,22 @@ def on_startup():
     init_db()
 
 
-@app.get("/cafes/", status_code=200)
+@app.get("/cafes", status_code=200)
 async def get_cafes(location: str | None = None) -> list[Cafe]:
     return find_cafe_by_location(location)
 
 
-@app.get("/employees/", status_code=200)
+@app.get("/employees", status_code=200)
 async def get_employees(cafe: str | None = None) -> list[Employee]:
     return find_employee_by_cafe(cafe)
 
 
-@app.post("/cafes/", status_code=201)
+@app.post("/cafes", status_code=201)
 async def create_cafe(cafe: Annotated[Cafe, Body()]):
     return add_cafe(cafe)
 
 
-@app.post("/employees/", status_code=201)
+@app.post("/employees", status_code=201)
 async def create_employee(employee: Annotated[Employee, Body()]):
     return add_employee(employee)
 
