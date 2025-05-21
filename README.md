@@ -70,19 +70,6 @@ uvicorn main:app --reload
 
 Refer to README of [frontend repo](https://github.com/arnavbajpai/Cafe-web-app-frontend/)
 
-## TBDs
----
-
-1. **Dockerise Backend** 
-
-
-
-2. **To be deployed on AWS.** 
-
-
-
-3. **Add db trigger to auto delete employees when cafe is deleted.** 
-
 ---
 
 ## 🤝 Contributing
