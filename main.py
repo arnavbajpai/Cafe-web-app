@@ -45,7 +45,7 @@ async def get_employees(cafe: str | None = None) -> list[Employee]:
 
 @app.post("/cafes/", status_code=201)
 async def create_cafe(cafe: Annotated[Cafe, Body()],
-                      logo: Annotated[UploadFile | None, File()] = None):
+                      logo: Annotated[UploadFile | None, Form()] = None):
     return add_cafe(cafe, logo)
 
 
@@ -55,9 +55,14 @@ async def create_employee(employee: Annotated[Employee, Body()]):
 
 
 @app.put("/cafes/{cafe_id}", status_code=200)
-async def modify_cafe(cafe_id: UUID,
-                      cafe: Annotated[UpdateCafe, Form()], logo: Optional[UploadFile] = None): #Actually unable to accept form data
-    return update_cafe(cafe_id, cafe, logo)
+async def modify_cafe(cafe_id: UUID, 
+                      description: Annotated[str | None, Form()] = None,
+                      location: Annotated[str | None, Form()] = None,
+                      cafeName: Annotated[str | None, Form()] = None, 
+                      logo: bytes | None = None): #Actually unable to accept form data
+    cafe = UpdateCafe(description=description, location = location, cafeName = cafeName)
+    update_cafe(cafe_id, cafe, logo)
+
 
 
 @app.put("/employees/{employee_id}", status_code=200)
